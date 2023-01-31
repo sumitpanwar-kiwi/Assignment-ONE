@@ -1,6 +1,5 @@
 const User = require('../model/user');
 
-
 //create user funciton
 const createUsers = async(req, res)=>{
     try {
@@ -13,14 +12,15 @@ const createUsers = async(req, res)=>{
         if(user.role=='admin'){
             throw new Error('Admin already exists! Cannot create two admins');
         }
-        user.avatar = req.file.buffer;
+        if(req.avatar){
+            user.avatar = req.file.buffer;
+        }
         await user.save();
         res.status(201).send({message : 'New user Created', user})
     } catch (error) {
         res.status(500).send({error : error.message});
     }
 };
-
 
 //get all users function
 const getAllUsers = async(req, res)=>{
@@ -35,7 +35,6 @@ const getAllUsers = async(req, res)=>{
     }
 };
 
-
 //login function
 const login = async(req,res)=>{
     try {
@@ -47,7 +46,6 @@ const login = async(req,res)=>{
     }
 };
 
-
 //logout function
 const logout = async(req, res)=>{
     try {
@@ -58,7 +56,6 @@ const logout = async(req, res)=>{
         res.status(500).send({error : error.message});
     }
 };
-
 
 //update user by id funciton
 const updateSpecificUser = async(req, res)=>{
@@ -90,7 +87,6 @@ const updateSpecificUser = async(req, res)=>{
     }
 }
 
-
 //delete user by id fucntion
 const deleteSpecificUser = async(req, res)=>{
     if(req.user.role =='user'){
@@ -112,7 +108,6 @@ const deleteSpecificUser = async(req, res)=>{
         res.status(400).send({error : error.message});
     }
 };
-
 
 //view your own profile function
 const viewProfile = (req, res)=>{
@@ -140,7 +135,6 @@ const updateProfile = async(req, res)=>{
         res.status(500).send({error : error.message});
     }
 };
-
 
 //exporting all the funcitons
 module.exports = {
