@@ -5,8 +5,6 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', (req, res)=> res.send('Hello from the post page'));
-
 //reject the user while creating post if the user is inactive
 const canPost = (req,res,next)=>{
     try {
